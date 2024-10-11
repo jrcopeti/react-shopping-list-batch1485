@@ -1,4 +1,4 @@
-function List({ items, onToggleItems, onDeleteItems }) {
+function List({ items, handleToggleItems, handleDeleteItems }) {
   return (
     <div className="list">
       <ul>
@@ -7,18 +7,14 @@ function List({ items, onToggleItems, onDeleteItems }) {
             <input
               type="checkbox"
               checked={item.bought}
-              onChange={() => onToggleItems(item.id)}
+              onChange={() => handleToggleItems(item.id)}
             />
-            {item.bought ? (
-              <span className="line-through checked">
-                {item.quantity} {item.description}{" "}
-              </span>
-            ) : (
-              <span className="line-through">
-                {item.quantity} {item.description}{" "}
-              </span>
-            )}
-            <button onClick={() => onDeleteItems(item.id)}>X</button>
+            <span
+              className={item.bought ? "line-through checked" : "line-through"}
+            >
+              {item.quantity} {item.description}
+            </span>
+            <button onClick={() => handleDeleteItems(item.id)}>X</button>
           </li>
         ))}
       </ul>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Form({ onAddItems }) {
+function Form({ handleAddItems }) {
   const [quantity, setQuantity] = useState(1);
   const [description, setDescription] = useState("");
 
@@ -9,6 +9,7 @@ function Form({ onAddItems }) {
 
     if (!description) {
       alert("Please enter an item");
+      return;
     }
 
     const newItem = {
@@ -17,15 +18,12 @@ function Form({ onAddItems }) {
       bought: false,
       id: crypto.randomUUID(),
     };
-    console.log(newItem);
 
-    onAddItems(newItem);
+    handleAddItems(newItem);
 
     setDescription("");
     setQuantity(1);
   }
-
-  
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>

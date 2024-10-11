@@ -5,45 +5,40 @@ import Footer from "./components/Footer";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [items, setItems] = useState(getItemsFromLocalStorage());
-
   function getItemsFromLocalStorage() {
     const savedItems = localStorage.getItem("shoppingListItems");
     return savedItems ? JSON.parse(savedItems) : [];
   }
+  const [items, setItems] = useState(getItemsFromLocalStorage());
 
   useEffect(() => {
     localStorage.setItem("shoppingListItems", JSON.stringify(items));
   }, [items]);
 
   function handleAddItems(newItem) {
-    setItems((items) => [...items, newItem]);
+    setItems([...items, newItem]);
   }
 
   function handleToggleItems(id) {
-    setItems((items) =>
-      items.map((item) =>
-        item.id === id ? { ...item, bought: !item.bought } : item
-      )
+    const updatedItems = items.map((item) =>
+      item.id === id ? { ...item, bought: !item.bought } : item
     );
+    setItems(updatedItems);
   }
 
   function handleDeleteItems(id) {
-    setItems((items) => items.filter((item) => item.id !== id));
+    const deleteItem = items.filter((item) => item.id !== id);
+    setItems(deleteItem);
   }
 
   return (
-    // Title (Header)
-    // Form
-    // List
-    // Footer (Stats)
     <div>
       <Title />
-      <Form onAddItems={handleAddItems} />
+      <Form handleAddItems={handleAddItems} />
       <List
         items={items}
-        onToggleItems={handleToggleItems}
-        onDeleteItems={handleDeleteItems}
+        handleToggleItems={handleToggleItems}
+        handleDeleteItems={handleDeleteItems}
       />
       <Footer items={items} />
     </div>
